@@ -15,6 +15,12 @@ class Login extends Controller
         return view('login_form');
     }
 
+    public function __construct()
+    {
+        $this->session = \Config\Services::session();
+    }
+
+
     public function processLogin()
     {
         // Validasi format email
@@ -59,16 +65,18 @@ class Login extends Controller
         // Close cURL session
         curl_close($ch);
 
-        // Decode respons JSON
+        // Decode response JSON
         $responseData = json_decode($response, true);
 
-        // Cek jika respons berisi token
+        // Check if the response contains a token
         if (isset($responseData['data']['token'])) {
-            // Set cookie dengan nama 'jwt_token' dan nilai token
-            setcookie('jwt_token', $responseData['data']['token'], time() + (12 * 60 * 60), '/'); // Cookie berlaku selama 12 jam
-        }
+            // Set the token in the session
+            session()->set('jwt_token', $responseData['data']['token']);
 
-        // Redirect ke halaman berikutnya
-        return redirect()->to(base_url('home'));
+            return redirect()->to(base_url('home'));
+            
+        } else {
+            return $this->respond(['error' => 'Invalid email or password'], 401);
+        }
     }
 }

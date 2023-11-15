@@ -68,7 +68,7 @@
             class="rounded-circle img-thumbnailW"
           />
           <p>Selamat datang,</p>
-          <h3>Kristanto Wibowo</h3>
+          <h3><?php echo $profile['data']['first_name']; ?> <span><?php echo $profile['data']['last_name']; ?><span></h3>
         </div>
       </div>
       <div class="col-md-5 container">
@@ -77,8 +77,11 @@
           style="background-color: #f42619; height: 161px; border-radius: 10px"
         >
           <p class="text-white pt-3">Saldo anda</p>
-          <h2 class="text-white">Rp.0</h2>
-          <p class="text-white">Lihat Saldo</p>
+          <?php 
+          //$rupiah = "Rp " . number_format($balance, 0, ',', '.');
+          ?>
+          <h2 class="text-white"><span id="hiddenNumber" style="display: none;">Rp. <?= $balance['data']['balance'] ?? 'N/A'; ?></span></h2>
+          <a href="#" onclick="toggleVisibility()" class="text-white" style="text-decoration:none;">Lihat Saldo</a>
         </div>
       </div>
     </div>
@@ -95,15 +98,13 @@
         <img src="<?= base_url('img/PGN.png') ?>" class="rounded mx-2" alt="..." />
         <img src="<?= base_url('img/Televisi.png') ?>" class="rounded mx-2" alt="..." />
         <img src="<?= base_url('img/Paket-Data.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Voucher-Makanan.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Zakat.png') ?>" class="rounded" alt="..." />
       </div>
     </div>
 
     <div class="mt-5">
       <label class="mx-4 mb-3">Temukan promo menarik</label>
     </div>
-    <div class="container col-12">
+    <div class="col-12">
       <img src="<?= base_url('img/Banner 1.png') ?>" class="rounded" alt="..." />
       <img src="<?= base_url('img/Banner 2.png') ?>" class="rounded" alt="..." />
       <img src="<?= base_url('img/Banner 3.png') ?>" class="rounded" alt="..." />
@@ -122,6 +123,18 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+
+    <script>
+      function toggleVisibility() {
+    var numberElement = document.getElementById('hiddenNumber');
+    if (numberElement.style.display === 'none') {
+        numberElement.style.display = 'inline';
+    } else {
+        numberElement.style.display = 'none';
+    }
+}
+
+    </script>
 
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
