@@ -67,10 +67,8 @@ class Home extends Controller
     }
 
     public function formTopup(){
-        // Pastikan token sudah diset saat login
         $token = $this->session->get('jwt_token');
 
-        // Fungsi untuk mengambil data dari API dengan token
         $getDataFromApi = function ($url) use ($token) {
             $ch = curl_init($url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -98,7 +96,6 @@ class Home extends Controller
         $banner = $getDataFromApi('https://take-home-test-api.nutech-integrasi.app/banner');
 
        
-        // Tampilkan data di view
         $alertMessage = $this->session->getFlashdata('alert_message');
         helper('form');
         return view('topup_form', [
@@ -113,18 +110,14 @@ class Home extends Controller
     {
        
         helper('form');
-        // Ambil jumlah top up dari formulir
         $amount = $this->request->getPost('top_up_amount');
 
-        // Validasi jumlah top up
         if (!is_numeric($amount) || $amount <= 0) {
-            // Tampilkan pesan kesalahan jika jumlah tidak valid
             return view('topup_form', ['error' => 'Jumlah Top Up tidak valid']);
         }
 
-        // Kirim permintaan ke API dengan Bearer Token JWT
         $apiUrl = 'https://take-home-test-api.nutech-integrasi.app/topup';
-        $token = $this->session->get('jwt_token');; // Isi dengan Bearer Token JWT yang diperoleh dari otentikasi
+        $token = $this->session->get('jwt_token');; 
 
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
@@ -138,17 +131,16 @@ class Home extends Controller
 
         $response = curl_exec($ch);
 
-        // Handle response
+        
         $responseData = json_decode($response, true);
         if ($responseData['status'] == 0) {
             $this->session->setFlashdata('alert_message', 'Top Up berhasil');
 
-            // Redirect ke function lain
+           
             return redirect()->to('home/formTopup');
         }else{
             $this->session->setFlashdata('alert_message', 'Gagal Top Up');
 
-            // Redirect ke function lain
             return redirect()->to('home/formTopup');
         }
         

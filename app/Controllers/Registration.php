@@ -28,13 +28,11 @@ class Registration extends Controller
             'confirm_password' => $this->request->getPost('confirm_password'),
         ];
 
-        // Validate if all fields are filled
         if (empty($data['email']) || empty($data['first_name']) || empty($data['last_name']) || empty($data['password']) || empty($data['confirm_password'])) {
             $data['message'] = 'All fields are required.';
             return view('registration_form', $data);
         }
 
-        // Validate if password and confirm_password match
         if ($data['password'] !== $data['confirm_password']) {
             $data['message'] = 'Password and Confirm Password do not match.';
             return view('registration_form', $data);
@@ -42,7 +40,6 @@ class Registration extends Controller
 
         $response = $this->sendRequest($apiUrl, $data);
 
-        // Check the response from the API
         if ($response) {
             $data['message'] = 'Registration successful.';
         } else {

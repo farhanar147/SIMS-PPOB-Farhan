@@ -35,16 +35,13 @@ class Login extends Controller
             return $this->respond(['error' => 'Password must be at least 8 characters long'], 400);
         }
 
-        // Data to be sent in the request
         $data = [
             'email'    => $email,
             'password' => $password,
         ];
 
-        // Convert data to JSON format
         $jsonData = json_encode($data);
 
-        // cURL initialization
         $ch = curl_init('https://take-home-test-api.nutech-integrasi.app/login');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
@@ -54,23 +51,18 @@ class Login extends Controller
             'Accept: application/json',
         ]);
 
-        // Execute cURL session and get the response
         $response = curl_exec($ch);
 
-        // Check for cURL errors
         if (curl_errno($ch)) {
             return $this->respond(['error' => 'Curl error: ' . curl_error($ch)], 500);
         }
 
-        // Close cURL session
         curl_close($ch);
 
-        // Decode response JSON
         $responseData = json_decode($response, true);
 
-        // Check if the response contains a token
         if (isset($responseData['data']['token'])) {
-            // Set the token in the session
+            
             session()->set('jwt_token', $responseData['data']['token']);
 
             return redirect()->to(base_url('home'));
