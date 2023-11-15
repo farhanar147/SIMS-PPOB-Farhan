@@ -1,0 +1,14 @@
+runtime: php73
+
+handlers:
+- url: /(.+\.php)$
+  script: auto
+  secure: always
+
+- url: /.*
+  script: index.php
+  secure: always
+
+env_variables:
+  CI_ENV: production
+  # Tambahkan variabel lingkungan lain yang diperlukan oleh aplikasi Anda
