@@ -32,6 +32,12 @@
     <title>SIMS PPOB</title>
   </head>
   <body>
+  <?php if (!empty($alertMessage)) : ?>
+        <script>
+            // Tampilkan pesan alert jika ada
+            alert("<?php echo $alertMessage; ?>");
+        </script>
+    <?php endif; ?>
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
         <a class="navbar-brand" href="<?= base_url('home') ?>">
@@ -45,7 +51,7 @@
         <div class="d-flex">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<?= base_url('home/formTopup') ?>">Top Up</a>
+            <a class="nav-link active" aria-current="page" href="<?= base_url('home/formTopup') ?>">Top Up</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Transaction</a>
@@ -68,7 +74,7 @@
             class="rounded-circle img-thumbnailW"
           />
           <p>Selamat datang,</p>
-          <h3><?php echo $profile['data']['first_name']; ?> <span><?php echo $profile['data']['last_name']; ?><span></h3>
+          <h3><?php echo $profile['data']['first_name']; ?> <span><?php echo $profile['data']['last_name']; ?></h3>
         </div>
       </div>
       <div class="col-md-5 container">
@@ -77,44 +83,79 @@
           style="background-color: #f42619; height: 161px; border-radius: 10px"
         >
           <p class="text-white pt-3">Saldo anda</p>
-          <?php 
-          //$rupiah = "Rp " . number_format($balance, 0, ',', '.');
-          ?>
           <h2 class="text-white"><span id="hiddenNumber" style="display: none;">Rp. <?= $balance['data']['balance'] ?? 'N/A'; ?></span></h2>
           <a href="#" onclick="toggleVisibility()" class="text-white" style="text-decoration:none;">Lihat Saldo</a>
         </div>
       </div>
     </div>
 
-    <div class="container mt-5">
-      <div class="col-12">
-        <img src="<?= base_url('img/Game.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Kurban.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Listrik.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Musik.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Paket-Data.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/PBB.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/PDAM.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/PGN.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Televisi.png') ?>" class="rounded mx-2" alt="..." />
-        <img src="<?= base_url('img/Paket-Data.png') ?>" class="rounded mx-2" alt="..." />
-      </div>
+    <div class="mt-5 mx-4 mb-3">
+      <label class="">Temukan promo menarik</label>
+      <h3>Nominal Top Up</h3>
     </div>
 
-    <div class="mt-5">
-      <label class="mx-4 mb-3">Temukan promo menarik</label>
-    </div>
-    <div class="col-12">
-      <img src="<?= base_url('img/Banner 1.png') ?>" class="rounded" alt="..." />
-      <img src="<?= base_url('img/Banner 2.png') ?>" class="rounded" alt="..." />
-      <img src="<?= base_url('img/Banner 3.png') ?>" class="rounded" alt="..." />
-      <img src="<?= base_url('img/Banner 4.png') ?>" class="rounded" alt="..." />
+    <div class="container row">
+      <div class="col-md-7">
+      <?php echo form_open('home/processTopup'); ?>
+          <input
+            class="form-control form-control-lg"
+            type="text"
+            placeholder="Masukan nominal Transfer"
+            name="top_up_amount"
+            aria-label=".form-control-lg example"
+          />
+          <br />
+          <div class="d-grid gap-2">
+            <button
+              class="btn"
+              style="background-color: #ff6600; color: #ffff"
+              type="submit"
+              value="topUp"
+            >
+              Top Up
+            </button>
+          </div>
+          <?php echo form_close(); ?>
+      </div>
+      <div class="col-md-5">
+        <div class="row">
+          <div
+            class="col-md-3 border border-dark rounded py-2 text-center mx-1"
+          >
+            <span>Rp 10.000</span>
+          </div>
+          <div
+            class="col-md-3 border border-dark rounded py-2 text-center mx-1"
+          >
+            <span>Rp 20.000</span>
+          </div>
+          <div
+            class="col-md-3 border border-dark rounded py-2 text-center mx-1"
+          >
+            <span>Rp 50.000</span>
+          </div>
+          <div
+            class="col-md-3 border border-dark rounded py-2 text-center mx-1 mt-4"
+          >
+            <span>Rp 100.000</span>
+          </div>
+          <div
+            class="col-md-3 border border-dark rounded py-2 text-center mx-1 mt-4"
+          >
+            <span>Rp 150.000</span>
+          </div>
+          <div
+            class="col-md-3 border border-dark rounded py-2 text-center mx-1 mt-4"
+          >
+            <span>Rp200.000</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="mb-5"></div>
     <!-- Optional JavaScript; choose one of the two! -->
 
-    <div class="text-center p-4" style="background-color: #f42619"></div>
     <!-- Copyright -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -123,7 +164,6 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
-
     <script>
       function toggleVisibility() {
     var numberElement = document.getElementById('hiddenNumber');

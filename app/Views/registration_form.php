@@ -106,7 +106,7 @@
             </div>
           <p class="text-center mt-2">
             Sudah punya akun?login
-            <a href="" style="text-decoration: none; color: #ff6600">disini</a>
+            <a href="<?=  base_url('Login'); ?>" style="text-decoration: none; color: #ff6600">disini</a>
           </p>
         </div>
       </div>

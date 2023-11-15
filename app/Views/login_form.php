@@ -77,7 +77,7 @@
 
           <p class="text-center mt-2">
             belum punya akun?registrasi
-            <a href="" style="text-decoration: none; color: #ff6600">disini</a>
+            <a href="<?= base_url('Registration') ?>" style="text-decoration: none; color: #ff6600">disini</a>
           </p>
         </div>
       </div>
